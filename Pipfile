@@ -8,6 +8,7 @@ chromadb = "*"
 pillow = "*"
 open-clip-torch = "*"
 matplotlib = "*"
+gradio = "*"
 
 [dev-packages]
 

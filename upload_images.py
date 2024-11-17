@@ -18,19 +18,35 @@ collection = chroma_client.get_collection(name="multimodal_collection",
 # Directory containing the images
 image_directory = '1950'
 
-# List all image files in the directory
-image_files = [f for f in os.listdir(image_directory) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'))]
+# # List all image files in the directory
+# image_files = [f for f in os.listdir(image_directory) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'))]
 
-# Generate unique IDs for each image
-ids = [str(uuid.uuid4()) for _ in image_files]
+# # Generate unique IDs for each image
+# ids = [str(uuid.uuid4()) for _ in image_files]
 
-# Create URIs for each image
-uris = [os.path.join(image_directory, f) for f in image_files]
+# # Create URIs for each image
+# uris = [os.path.join(image_directory, f) for f in image_files]
+
+# # Add images to the collection
+# collection.add(
+#     ids=ids,
+#     uris=uris
+# )
+
+
+# Function to add images to the collection
+def add_images_to_collection(image_directory):
+    image_files = [f for f in os.listdir(image_directory) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    ids = [str(uuid.uuid4()) for _ in image_files]
+    uris = [os.path.join(image_directory, f) for f in image_files]
+    
+    collection.add(
+        ids=ids,
+        uris=uris
+    )
 
 # Add images to the collection
-collection.add(
-    ids=ids,
-    uris=uris
-)
+add_images_to_collection(image_directory)
 
 print(collection.count())
+

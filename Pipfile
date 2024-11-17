@@ -7,6 +7,7 @@ name = "pypi"
 chromadb = "*"
 pillow = "*"
 open-clip-torch = "*"
+matplotlib = "*"
 
 [dev-packages]
 

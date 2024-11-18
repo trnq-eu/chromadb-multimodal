@@ -8,4 +8,4 @@ chroma_client = chromadb.PersistentClient(path="my_vectordb")
 def delete_collection(collection_name):
     chroma_client.delete_collection(name=collection_name)
 
-delete_collection('ffm_collection')
+delete_collection('multimodal_collection')

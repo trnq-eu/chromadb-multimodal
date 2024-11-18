@@ -9,6 +9,7 @@ pillow = "*"
 open-clip-torch = "*"
 matplotlib = "*"
 gradio = "*"
+tqdm = "*"
 
 [dev-packages]
 

@@ -135,7 +135,7 @@ with gr.Blocks() as iface:
             visible=False
         )
         
-     # Set up the submit button
+    # Set up the submit button
     submit_btn = gr.Button("CERCA")
 
     with gr.Row():
@@ -147,15 +147,13 @@ with gr.Blocks() as iface:
             label="Modifica il numero di risultati"
         )
 
-   
-    
     gallery_output = gr.Gallery(label="Immagini simili")
     
     # Set up event handlers
     def update_visibility(query_type):
         return {
             text_input: gr.update(visible=query_type=="Ricerca testuale"),
-            image_input: gr.update(visible=query_type=="Ricerca per immagini")
+            image_input: gr.update(visible=query_type=="Ricerca per immagine")
         }
     
     query_type.change(
@@ -164,6 +162,12 @@ with gr.Blocks() as iface:
         outputs=[text_input, image_input]
     )
     
+    # Add submit event for text_input
+    text_input.submit(
+        fn=gradio_interface,
+        inputs=[query_type, text_input, image_input, n_results],
+        outputs=gallery_output
+    )
     
     submit_btn.click(
         fn=gradio_interface,

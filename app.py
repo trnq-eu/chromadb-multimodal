@@ -85,7 +85,7 @@ def process_results(query_results):
             if uri and os.path.exists(uri):
                 # Load and prepare the image for display
                 image = load_image(uri)
-                gallery_images.append((image, f'ID: {id}, Distance: {distance:.4f}'))
+                gallery_images.append((image, f'ID: {id}, Distanza: {distance:.4f}'))
         except Exception as e:
             print(f"Error processing result {j}: {e}")
             continue
@@ -95,9 +95,9 @@ def process_results(query_results):
 # Modified Gradio Interface function to handle all inputs
 def gradio_interface(query_type, text_query, image_query, n_results):
     try:
-        if query_type == "Text Query" and text_query:
+        if query_type == "Ricerca testuale" and text_query:
             query_results = query_text(text_query, int(n_results))
-        elif query_type == "Image Query" and image_query is not None:
+        elif query_type == "Ricerca per immagine" and image_query is not None:
             query_results = query_image(image_query, int(n_results))
         else:
             return []
@@ -112,48 +112,50 @@ def gradio_interface(query_type, text_query, image_query, n_results):
 
 # Define the Gradio interface with conditional inputs
 with gr.Blocks() as iface:
-    gr.Markdown("# ChromaDB Image Search")
-    gr.Markdown("Upload an image or enter a text query to find similar images in the collection.")
+    gr.Markdown("# Ricerca multimodale")
+    gr.Markdown("Carica un'immagine o inserisci un parametro di ricerca per trovare immagini simili all'interno della collezione.")
     
     with gr.Row():
         query_type = gr.Radio(
-            choices=["Text Query", "Image Query"],
-            label="Query Type",
-            value="Text Query"
+            choices=["Ricerca testuale", "Ricerca per immagine"],
+            label="Tipologia di ricerca",
+            value="Ricerca testuale"
         )
     
     with gr.Row():
         text_input = gr.Textbox(
-            label="Text Query",
+            label="Ricerca testuale",
             lines=1,
-            placeholder="Enter text query here...",
+            placeholder="Inserisci una chiave di ricerca inglese e premi il tasto CERCA",
             visible=True
         )
         image_input = gr.Image(
             type="filepath",  # Changed from 'pil' to 'filepath'
-            label="Image Query",
+            label="Ricerca per immagine",
             visible=False
         )
-    
+        
+     # Set up the submit button
+    submit_btn = gr.Button("CERCA")
+
     with gr.Row():
         n_results = gr.Slider(
             minimum=1,
             maximum=10,
             step=1,
             value=2,
-            label="Number of Results"
+            label="Modifica il numero di risultati"
         )
 
-    # Set up the submit button
-    submit_btn = gr.Button("Search")
+   
     
-    gallery_output = gr.Gallery(label="Similar Images")
+    gallery_output = gr.Gallery(label="Immagini simili")
     
     # Set up event handlers
     def update_visibility(query_type):
         return {
-            text_input: gr.update(visible=query_type=="Text Query"),
-            image_input: gr.update(visible=query_type=="Image Query")
+            text_input: gr.update(visible=query_type=="Ricerca testuale"),
+            image_input: gr.update(visible=query_type=="Ricerca per immagini")
         }
     
     query_type.change(

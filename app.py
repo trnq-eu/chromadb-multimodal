@@ -143,6 +143,9 @@ with gr.Blocks() as iface:
             value=2,
             label="Number of Results"
         )
+
+    # Set up the submit button
+    submit_btn = gr.Button("Search")
     
     gallery_output = gr.Gallery(label="Similar Images")
     
@@ -159,8 +162,7 @@ with gr.Blocks() as iface:
         outputs=[text_input, image_input]
     )
     
-    # Set up the submit button
-    submit_btn = gr.Button("Search")
+    
     submit_btn.click(
         fn=gradio_interface,
         inputs=[query_type, text_input, image_input, n_results],
@@ -168,4 +170,4 @@ with gr.Blocks() as iface:
     )
 
 # Launch the interface
-iface.launch(debug=True)
+iface.launch(share=True)

@@ -126,7 +126,7 @@ with gr.Blocks() as iface:
         text_input = gr.Textbox(
             label="Ricerca testuale",
             lines=1,
-            placeholder="Inserisci una chiave di ricerca inglese e premi il tasto CERCA",
+            placeholder="Inserisci una chiave di ricerca (in inglese) e premi il tasto CERCA",
             visible=True
         )
         image_input = gr.Image(
